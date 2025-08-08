@@ -4,7 +4,6 @@ from collections import Counter
 
 @Solution
 def main(ctx: Context):
-    ctx.read("inputs/historian_hysteria.txt")
     lines = [line for line in ctx.content.split("\n") if line]
 
     def unpack(string: str):
