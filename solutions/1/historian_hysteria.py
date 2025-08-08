@@ -1,9 +1,5 @@
 from utils.wrapper import Context, Solution
-
-
-def unpack(string: str):
-    l, _, r = string.partition(" ")
-    return map(int, [l.strip(), r.strip()])
+from collections import Counter
 
 
 @Solution
@@ -11,13 +7,18 @@ def main(ctx: Context):
     ctx.read("inputs/historian_hysteria.txt")
     lines = [line for line in ctx.content.split("\n") if line]
 
+    def unpack(string: str):
+        return map(int, string.strip().split())
+
     ls, lr = zip(*map(unpack, lines))
     ls, lr = sorted(ls), sorted(lr)
 
-    result = [abs(l - r) for l, r in zip(ls, lr)]
-    distance = sum(result)
+    occurance = [k * v for k, v in Counter(lr).items() if k in ls]
+    result = [(l, abs(l - r), r) for l, r in zip(ls, lr)]
+    distance = sum(d for _, d, _ in result)
 
     print("Total Distance:", distance)
+    print("Similarity Score:", sum(occurance))
 
 
 if __name__ == "__main__":
