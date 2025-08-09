@@ -9,8 +9,9 @@ class Context:
     def __init__(self):
         self.name = ""
         self.content = ""
+        self.lines = []
 
-    def _load(self):
+    def load(self):
         if not self.name:
             raise RuntimeError("Module name is empty.")
 
@@ -22,6 +23,7 @@ class Context:
             self.content = f.read()
             if not self.content:
                 raise RuntimeError("Input content is empty.")
+            self.lines = self.content.splitlines()
 
 
 def Solution(func: Callable[[Context], Any]) -> Callable[[], Any]:
@@ -31,7 +33,7 @@ def Solution(func: Callable[[Context], Any]) -> Callable[[], Any]:
         f = Path(inspect.stack()[1].filename)
         ctx.name = f.stem
         print(f"Day {f.parent.stem}:", ctx.name.replace("_", " ").capitalize())
-        ctx._load()
+        ctx.load()
         return func(ctx)
 
     return main
