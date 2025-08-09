@@ -1,4 +1,4 @@
-from utils.wrapper import Context, Solution
+from aoc.utils.wrapper import Context, Solution
 
 
 def is_stable(pairs):
