@@ -14,15 +14,25 @@ def is_safe(numbers):
     )
 
 
+def damper(numbers):
+    for i in range(len(numbers)):
+        if is_safe(numbers[:i] + numbers[i + 1 :]):
+            return True
+    return False
+
+
 @Solution
 def main(ctx: Context):
     # ctx.name = "test"
     # ctx.load()
 
     reports = [list(map(int, line.split())) for line in ctx.lines]
+
     safe_reports = [levels for levels in reports if is_safe(levels)]
-    # print("\n".join(map(str, safe_reports)))
-    print("Safe Reports:", len(safe_reports))
+    print("[#1 Attempt] Safe Reports:", len(safe_reports))
+
+    safe_reports = [levels for levels in reports if damper(levels)]
+    print("[#2 Attempt] Safe Reports:", len(safe_reports))
 
 
 if __name__ == "__main__":
